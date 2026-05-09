@@ -46,5 +46,6 @@ lv_obj_t* lu_locker_add_info_txt(lu_locker_t* locker,lu_locker_info_txt_t* info)
 void lu_locker_remove_info_txt(lu_locker_t* locker, lu_locker_info_txt_t* info);
 lv_obj_t* lu_locker_add_info_icon(lu_locker_t* locker, lu_locker_info_icon_t* info);
 void lu_locker_remove_info_icon(lu_locker_t* locker, lu_locker_info_icon_t* info);
+void lu_locker_set_wallpaper(lu_locker_t* locker, const char* path);
 
 #endif

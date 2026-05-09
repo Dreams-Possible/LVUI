@@ -9,5 +9,7 @@ lv_obj_t* lu_widget_txt_init(lv_obj_t* parent, const lv_font_t* font);
 lv_obj_t* lu_widget_btn_init(lv_obj_t* parent);
 lv_obj_t* lu_widget_switch_init(lv_obj_t* parent);
 lv_obj_t* lu_widget_slider_init(lv_obj_t* parent);
+lv_obj_t* lu_widget_image_init(lv_obj_t* parent);
+// bool lu_widget_image_set_src(lv_obj_t* container, const char* src);
 
 #endif

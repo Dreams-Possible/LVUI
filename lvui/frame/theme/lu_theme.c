@@ -178,6 +178,10 @@ static void obj_theme_update(lu_theme_t* theme, lv_obj_t* obj, lu_theme_type_t t
                     {
                         lv_obj_set_style_bg_color(obj, lu_theme_get_dark_color(theme), LV_PART_INDICATOR | LV_STATE_DEFAULT);
                         lv_obj_set_style_bg_color(obj, lu_theme_get_bright_color(theme), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    }else
+                    if(lv_obj_check_type(obj, &lv_image_class))
+                    {
+                        lv_obj_set_style_bg_color(obj, lu_theme_get_bright_color(theme), LV_PART_MAIN | LV_STATE_DEFAULT);
                     }
                 break;
                 case LU_THEME_MODE_DARK:
@@ -201,6 +205,10 @@ static void obj_theme_update(lu_theme_t* theme, lv_obj_t* obj, lu_theme_type_t t
                     if(lv_obj_check_type(obj, &lv_slider_class))
                     {
                         lv_obj_set_style_bg_color(obj, lu_theme_get_bright_color(theme), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+                        lv_obj_set_style_bg_color(obj, lu_theme_get_dark_color(theme), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    }else
+                    if(lv_obj_check_type(obj, &lv_image_class))
+                    {
                         lv_obj_set_style_bg_color(obj, lu_theme_get_dark_color(theme), LV_PART_MAIN | LV_STATE_DEFAULT);
                     }
                 break;
@@ -233,6 +241,10 @@ static void obj_theme_update(lu_theme_t* theme, lv_obj_t* obj, lu_theme_type_t t
                     {
                         lv_obj_set_style_bg_color(obj, lu_theme_get_bright_color(theme), LV_PART_INDICATOR | LV_STATE_DEFAULT);
                         lv_obj_set_style_bg_color(obj, lu_theme_get_dark_color(theme), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    }else
+                    if(lv_obj_check_type(obj, &lv_image_class))
+                    {
+                        lv_obj_set_style_bg_color(obj, lu_theme_get_dark_color(theme), LV_PART_MAIN | LV_STATE_DEFAULT);
                     }
                 break;
                 case LU_THEME_MODE_DARK:
@@ -256,6 +268,10 @@ static void obj_theme_update(lu_theme_t* theme, lv_obj_t* obj, lu_theme_type_t t
                     if(lv_obj_check_type(obj, &lv_slider_class))
                     {
                         lv_obj_set_style_bg_color(obj, lu_theme_get_dark_color(theme), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+                        lv_obj_set_style_bg_color(obj, lu_theme_get_bright_color(theme), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    }else
+                    if(lv_obj_check_type(obj, &lv_image_class))
+                    {
                         lv_obj_set_style_bg_color(obj, lu_theme_get_bright_color(theme), LV_PART_MAIN | LV_STATE_DEFAULT);
                     }
                 break;
@@ -289,6 +305,10 @@ static void obj_theme_update(lu_theme_t* theme, lv_obj_t* obj, lu_theme_type_t t
                     {
                         lv_obj_set_style_bg_color(obj, theme->theme_color, LV_PART_INDICATOR | LV_STATE_DEFAULT);
                         lv_obj_set_style_bg_color(obj, lu_theme_get_bright_color(theme), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    }else
+                    if(lv_obj_check_type(obj, &lv_image_class))
+                    {
+                        lv_obj_set_style_bg_color(obj, theme->theme_color, LV_PART_MAIN | LV_STATE_DEFAULT);
                     }
                 break;
                 case LU_THEME_MODE_DARK:
@@ -314,6 +334,10 @@ static void obj_theme_update(lu_theme_t* theme, lv_obj_t* obj, lu_theme_type_t t
                     {
                         lv_obj_set_style_bg_color(obj, theme->theme_color, LV_PART_INDICATOR | LV_STATE_DEFAULT);
                         lv_obj_set_style_bg_color(obj, lu_theme_get_dark_color(theme), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    }else
+                    if(lv_obj_check_type(obj, &lv_image_class))
+                    {
+                        lv_obj_set_style_bg_color(obj, lv_color_darken(theme->theme_color, 32), LV_PART_MAIN | LV_STATE_DEFAULT);
                     }
                 break;
                 default:

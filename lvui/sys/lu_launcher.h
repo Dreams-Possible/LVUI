@@ -63,5 +63,6 @@ void lu_launcher_close_all(lu_launcher_t* launcher);
 void lu_launcher_set_cb(lu_launcher_t* launcher, lu_launcher_event_t event, lu_launcher_double_click_cb_t cb, void* user_data);
 void* lu_launcher_get_user_data(lu_launcher_t* launcher, lu_launcher_event_t event);
 int32_t lu_launcher_get_active_app_num(lu_launcher_t* launcher);
+void lu_launcher_set_wallpaper(lu_launcher_t* launcher, const char* path);
 
 #endif

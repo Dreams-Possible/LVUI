@@ -14,6 +14,7 @@
 #include "lvui/frame/theme/lu_theme.h"
 #include "lvui/frame/widget/lu_widget.h"
 #include "lvui/frame/widget/lu_layout.h"
+#include "src/layouts/flex/lv_flex.h"
 
 #include "lu_locker.h"
 
@@ -67,8 +68,7 @@ lv_obj_t* lu_locker_add_info_txt(lu_locker_t* locker,lu_locker_info_txt_t* info)
 void lu_locker_remove_info_txt(lu_locker_t* locker, lu_locker_info_txt_t* info);
 lv_obj_t* lu_locker_add_info_icon(lu_locker_t* locker, lu_locker_info_icon_t* info);
 void lu_locker_remove_info_icon(lu_locker_t* locker, lu_locker_info_icon_t* info);
-
-
+void lu_locker_set_wallpaper(lu_locker_t* locker, const char* path);
 
 static void locker_event_cb(lu_locker_t* locker, lu_locker_event_t event)
 {
@@ -162,7 +162,8 @@ lu_locker_t* lu_locker_create(lu_disp_t* lu_disp, lu_theme_t* lu_theme, lu_touch
             // lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
             // lu_theme_add_obj(locker->lu_theme, obj, LU_THEME_TYPE_MODE);
             {
-                lv_obj_t* obj = lu_widget_obj_init(locker->contain_mask);
+                // lv_obj_t* obj = lu_widget_obj_init(locker->contain_mask);
+                lv_obj_t* obj = lu_widget_image_init(locker->contain_mask);
                 if(!obj)
                 {
                     lu_locker_delete(&locker);
@@ -629,4 +630,14 @@ void lu_locker_remove_icon(lu_locker_t* locker, lu_locker_info_icon_t* info)
         default:
         break;
     }
+}
+
+void lu_locker_set_wallpaper(lu_locker_t* locker, const char* path)
+{
+    if(!locker||!path)
+    {
+        return;
+    }
+    lv_image_set_src(locker->bg, path);
+    // lu_widget_image_set_src(locker->bg, path);
 }
