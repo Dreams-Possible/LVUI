@@ -5,7 +5,7 @@
 
 LVUI是一个基于LVGL的轻量级操作系统UI框架，专为嵌入式系统和资源受限设备设计，提供现代、流畅的用户界面体验。
 
-<img width="400" height="533" alt="202605092121 (1)" src="https://github.com/user-attachments/assets/a12b2990-203a-4691-b34a-5bafa94ddf0d" />
+<img width="400" height="603" alt="example.gif" src="https://github.com/Dreams-Possible/LVUI/example.gif" />
 
 > **⚠️ 重要提示**
 >
