@@ -4,6 +4,7 @@
 #include "lvui/plat/lu_mem.h"
 #include "lu_disp.h"
 #include <math.h>
+#include <string.h>
 
 #define STAND_DPI 160
 
@@ -74,7 +75,7 @@ void lu_disp_delete(lu_disp_t** disp)
         return;
     }
     lv_obj_delete(lu_disp_get_contain(*disp));
-    lu_free(lu_disp_get_contain((*disp)));
+    lu_free((*disp));
     *disp = NULL;
 }
 

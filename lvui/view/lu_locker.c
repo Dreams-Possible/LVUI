@@ -19,6 +19,7 @@
 #include "lu_locker.h"
 
 #include <stdio.h>
+#include <string.h>
 
 typedef struct lu_locker_t
 {

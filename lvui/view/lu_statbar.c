@@ -19,7 +19,7 @@
 #include "lu_statbar.h"
 
 #include <stdio.h>
-
+#include <string.h>
 
 typedef struct lu_statbar_t
 {

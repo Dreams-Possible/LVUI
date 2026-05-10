@@ -9,6 +9,8 @@
 #include "src/misc/lv_types.h"
 #include "lu_theme.h"
 
+#include <string.h>
+
 typedef struct lu_theme_obj_t
 {
     lv_obj_t* obj;

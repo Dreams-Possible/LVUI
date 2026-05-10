@@ -25,6 +25,8 @@
 
 #include "lu_launcher.h"
 
+#include <string.h>
+
 typedef struct lu_app_t
 {
     lu_launcher_t* launcher;

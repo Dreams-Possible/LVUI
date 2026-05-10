@@ -23,6 +23,8 @@
 
 #include "lu_ctrcent.h"
 
+#include <string.h>
+
 typedef struct lu_ctrbtn_t
 {
     lu_ctrcent_t* ctrcent;

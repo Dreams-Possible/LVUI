@@ -7,6 +7,7 @@
 #include "lvui/misc/lu_sll.h"
 
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 
 static const char *month_full[12] = {
