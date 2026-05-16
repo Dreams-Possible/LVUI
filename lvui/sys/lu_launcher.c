@@ -352,8 +352,6 @@ void lu_launcher_delete(lu_launcher_t** launcher)
     *launcher = NULL;
 }
 
-// c
-
 static void app_event_cb(lv_event_t* event)
 {
     // LU_LOG("app_event_cb!");

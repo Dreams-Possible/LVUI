@@ -2,6 +2,14 @@
 #define LVUI_CONF_H
 
 /*============================
+ *       LVGL Configuration
+ *============================*/
+
+#ifndef LU_LVGL_HEADER
+#define LU_LVGL_HEADER "lvgl/lvgl.h"
+#endif
+
+/*============================
  *       Log Configuration
  *============================*/
 
