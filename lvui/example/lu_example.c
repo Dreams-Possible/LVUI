@@ -4,20 +4,25 @@
 
 static void app_event_cb(lu_app_t* app)
 {
-    LV_LOG_USER("app_event_cb: app clicked");
+    LU_LOG("app_event_cb: app clicked");
 }
 
 static void ctrbtn_event_cb(lu_ctrbtn_t* ctrbtn)
 {
-    LV_LOG_USER("ctrbtn_event_cb: control button clicked");
+    LU_LOG("ctrbtn_event_cb: control button clicked");
 }
 
-lvui_t* lu_example_init()
+static void sidebtn_event_cb(lu_ctrbtn_t* sidebtn)
 {
-    lvui_t* lvui = lvui_create(320, 480, 3.5);
+    LU_LOG("sidebtn_event_cb:%f", lu_ctrcent_get_ctrbtn_status(sidebtn));
+}
+
+lvui_t* lu_example_init(int32_t width, int32_t height, float size)
+{
+    lvui_t* lvui = lvui_create(width, height, size);
     if(!lvui)
     {
-        LV_LOG_USER("lu_example_init: lvui_create failed");
+        LU_LOG("lu_example_init: lvui_create failed");
         return NULL;
     }
 
@@ -25,7 +30,7 @@ lvui_t* lu_example_init()
     lv_obj_t* app_contain = lu_app_theme_create(lvui);
     if(!app_contain)
     {
-        LV_LOG_USER("lu_example_init: lu_app_theme_create failed");
+        LU_LOG("lu_example_init: lu_app_theme_create failed");
         lvui_delete(&lvui);
         return NULL;
     }
@@ -63,7 +68,7 @@ lvui_t* lu_example_init()
         lu_app_t* app = lu_launcher_add_app(lu_sysui_get_launcher(lvui->sysui), &app_info);
         if(!app)
         {
-            LV_LOG_USER("lu_example_init: lu_launcher_add_app[%d] failed", i);
+            LU_LOG("lu_example_init: lu_launcher_add_app[%d] failed", i);
             lvui_delete(&lvui);
             return NULL;
         }
@@ -75,7 +80,7 @@ lvui_t* lu_example_init()
     {
         {0, 0, LU_CTRBTN_SIZE_LARGE,  LV_SYMBOL_WIFI,        "WiFi"},
         {2, 0, LU_CTRBTN_SIZE_SMALL,  LV_SYMBOL_BLUETOOTH,   "BT"},
-        {3, 0, LU_CTRBTN_SIZE_SMALL,  LV_SYMBOL_EYE_OPEN,    "Eye"},
+        {3, 0, LU_CTRBTN_SIZE_SMALL,  LV_SYMBOL_AUDIO,       "Music"},
         {0, 2, LU_CTRBTN_SIZE_SMALL,  LV_SYMBOL_GPS,         "GPS"},
         {1, 2, LU_CTRBTN_SIZE_SMALL,  LV_SYMBOL_BATTERY_FULL,"Battery"},
         {2, 1, LU_CTRBTN_SIZE_MEDIUM, LV_SYMBOL_VOLUME_MID,  "Volume"},
@@ -96,11 +101,17 @@ lvui_t* lu_example_init()
         lu_ctrbtn_t* ctrbtn = lu_ctrcent_add_ctrbtn(lu_sysui_get_ctrcent(lvui->sysui), &ctrbtn_info);
         if(!ctrbtn)
         {
-            LV_LOG_USER("lu_example_init: lu_ctrcent_add_ctrbtn[%d] failed", i);
+            LU_LOG("lu_example_init: lu_ctrcent_add_ctrbtn[%d] failed", i);
             lvui_delete(&lvui);
             return NULL;
         }
-        lu_ctrcent_add_ctrbtn_cb(ctrbtn, ctrbtn_event_cb, NULL);
+        if(ctrbtn_defs[i].size == LU_CTRBTN_SIZE_MEDIUM)
+        {
+            lu_ctrcent_add_ctrbtn_cb(ctrbtn, sidebtn_event_cb, NULL);
+        }else
+        {
+            lu_ctrcent_add_ctrbtn_cb(ctrbtn, ctrbtn_event_cb, NULL);
+        }
     }
 
     /* Theme */

@@ -11,11 +11,6 @@
  */
 
 #include "lvui/app/lu_app_theme.h"
-#include "lvui/frame/widget/lu_widget.h"
-#include "lvui/frame/disp/lu_font.h"
-#include "lvui/frame/disp/lu_disp.h"
-#include "lvui/frame/theme/lu_theme.h"
-#include "lvui/sys/lu_sysui.h"
 
 /*============================
  *    布局与颜色常量定义
@@ -179,7 +174,7 @@ lv_obj_t* lu_app_theme_create(lvui_t* lvui)
     lu_disp_t* disp = lvui->lu_disp;
     lu_sysui_t* sysui = lvui->sysui;
     s_theme = lu_sysui_get_theme(sysui);
-    float dpi = lu_disp_get_dpi(disp);
+    float dpi = disp->dpi;
     int32_t disp_w = lu_disp_get_hor(disp);
     int32_t disp_h = lu_disp_get_ver(disp);
 
@@ -194,6 +189,7 @@ lv_obj_t* lu_app_theme_create(lvui_t* lvui)
     lv_obj_set_style_bg_opa(app_contain, LV_OPA_100, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(app_contain, lu_theme_get_color(s_theme), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_pad_all(app_contain, PADDING, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_add_flag(app_contain, LV_OBJ_FLAG_SCROLLABLE);
 
     lu_theme_info_t theme_info =
     {
@@ -203,8 +199,8 @@ lv_obj_t* lu_app_theme_create(lvui_t* lvui)
     lu_theme_add_obj(s_theme, app_contain, &theme_info);
 
     /* ---- 标题 ---- */
-    lv_obj_t* title = lu_widget_txt_init(app_contain,
-        lu_font_get(dpi, LU_FONT_SIZE_XXLARGE, 1));
+    lv_obj_t* title = lu_widget_txt_init(app_contain,lu_font_get(dpi, LU_FONT_SIZE_XXLARGE, 1));
+    // lv_obj_t* title = lu_widget_txt_init(app_contain,lu_font_get_auto(disp, LU_FONT_AUTO_SIZE_BIG));
     theme_info.self_type = LU_THEME_TYPE_INVMODE;
     lu_theme_add_obj(s_theme, title, &theme_info);
     lv_label_set_text(title, "Theme Settings");
@@ -212,16 +208,18 @@ lv_obj_t* lu_app_theme_create(lvui_t* lvui)
 
     /* ---- 主题模式切换 ---- */
     int32_t y = title_y + SECTION_GAP + lu_font_get(dpi, LU_FONT_SIZE_XXLARGE, 1)->line_height;
+    // int32_t y = title_y + SECTION_GAP + lu_font_get_auto(disp, LU_FONT_AUTO_SIZE_BIG)->line_height;
 
     /* 模式标签 */
-    lv_obj_t* mode_label = lu_widget_txt_init(app_contain,
-        lu_font_get(dpi, LU_FONT_SIZE_LARGE, 1));
+    lv_obj_t* mode_label = lu_widget_txt_init(app_contain,lu_font_get(dpi, LU_FONT_SIZE_LARGE, 1));
+    // lv_obj_t* mode_label = lu_widget_txt_init(app_contain,lu_font_get_auto(disp, LU_FONT_AUTO_SIZE_BIG));
     lu_theme_add_obj(s_theme, mode_label, &theme_info);
     lv_label_set_text(mode_label, "Dark Mode");
     lv_obj_set_pos(mode_label, 0, y);
 
     /* 模式开关（放在标签下方，使用LVGL原生样式） */
     int32_t label_h = lu_font_get(dpi, LU_FONT_SIZE_LARGE, 1)->line_height;
+    // int32_t label_h = lu_font_get_auto(disp, LU_FONT_AUTO_SIZE_BIG)->line_height;
     y += label_h + 6;
 
     s_mode_switch = lv_switch_create(app_contain);
@@ -239,8 +237,8 @@ lv_obj_t* lu_app_theme_create(lvui_t* lvui)
     y += SWITCH_HEIGHT + BLOCK_GAP;
 
     /* 预览标签 */
-    lv_obj_t* preview_label = lu_widget_txt_init(app_contain,
-        lu_font_get(dpi, LU_FONT_SIZE_LARGE, 1));
+    lv_obj_t* preview_label = lu_widget_txt_init(app_contain,lu_font_get(dpi, LU_FONT_SIZE_LARGE, 1));
+    // lv_obj_t* preview_label = lu_widget_txt_init(app_contain,lu_font_get_auto(disp, LU_FONT_AUTO_SIZE_BIG));
     lu_theme_add_obj(s_theme, preview_label, &theme_info);
     lv_label_set_text(preview_label, "Theme Preview");
     lv_obj_set_pos(preview_label, 0, y);
@@ -264,8 +262,8 @@ lv_obj_t* lu_app_theme_create(lvui_t* lvui)
     y += BTN_SIZE + BLOCK_GAP;
 
     /* 颜色标签 */
-    lv_obj_t* color_label = lu_widget_txt_init(app_contain,
-        lu_font_get(dpi, LU_FONT_SIZE_LARGE, 1));
+    lv_obj_t* color_label = lu_widget_txt_init(app_contain,lu_font_get(dpi, LU_FONT_SIZE_LARGE, 1));
+    // lv_obj_t* color_label = lu_widget_txt_init(app_contain,lu_font_get_auto(disp, LU_FONT_AUTO_SIZE_BIG));
     lu_theme_add_obj(s_theme, color_label, &theme_info);
     lv_label_set_text(color_label, "Theme Color");
     lv_obj_set_pos(color_label, 0, y);
