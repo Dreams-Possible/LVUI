@@ -63,6 +63,7 @@ lvui_t* lvui_create(int16_t width, int16_t height, float size)
     lv_obj_remove_flag(disp_obj, LV_OBJ_FLAG_SCROLLABLE);
     lu_disp_t disp_info={
         .contain = contain,
+        .scale = 1,
     };
     if(width&&height&&size)
     {
@@ -74,6 +75,7 @@ lvui_t* lvui_create(int16_t width, int16_t height, float size)
         lv_obj_set_size(contain, LV_PCT(100), LV_PCT(100));
         disp_info.dpi = lu_disp_get_default_dpi();
     }
+    lv_obj_update_layout(contain);
     if(!contain)
     {
         lvui_delete(&lvui);

@@ -28,5 +28,8 @@ void lu_sysinfo_set_second(lu_sysinfo_t* sys, uint8_t second);
 void lu_sysinfo_get_second(lu_sysinfo_t* sys, uint8_t* second);
 char* lu_sysinfo_get_second_str(lu_sysinfo_t* sys);
 void lu_sysinfo_set_time(lu_sysinfo_t* sys, uint64_t time);
+void lu_sysinfo_set_timezone(lu_sysinfo_t* sys, int8_t timezone);
+int8_t lu_sysinfo_get_timezone(lu_sysinfo_t* sys);
+const char* lu_sysinfo_get_timezone_str(lu_sysinfo_t* sys);
 
 #endif

@@ -10,6 +10,7 @@ typedef struct lu_disp_t
     // int32_t (*get_ver)(void);
     lv_obj_t* contain;
     float dpi;
+    float scale;
 }lu_disp_t;
 
 // typedef struct lu_disp_t lu_disp_t;

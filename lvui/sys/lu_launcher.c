@@ -73,7 +73,7 @@ static void app_desktop_contain_event_cb(lv_event_t *event);
 static void launcher_timer_cb(lv_timer_t* timer);
 lu_launcher_t* lu_launcher_create(const lu_launcher_info_t* launcher_info);
 void lu_launcher_delete(lu_launcher_t** launcher);
-lv_obj_t* lu_launcher_get_app_contain(lu_launcher_t* launcher);
+// lv_obj_t* lu_launcher_get_app_contain(lu_launcher_t* launcher);
 static void app_event_cb(lv_event_t* event);
 lu_app_t* lu_launcher_add_app(lu_launcher_t* launcher, const lu_app_info_t* app_info);
 void lu_launcher_remove_app(lu_launcher_t* launcher, lu_app_t** app);
@@ -89,7 +89,7 @@ void lu_launcher_close_all(lu_launcher_t* launcher);
 void lu_launcher_set_cb(lu_launcher_t* launcher, lu_launcher_event_t event, lu_launcher_double_click_cb_t cb, void* user_data);
 void* lu_launcher_get_user_data(lu_launcher_t* launcher, lu_launcher_event_t event);
 int32_t lu_launcher_get_active_app_num(lu_launcher_t* launcher);
-void lu_launcher_set_wallpaper(lu_launcher_t* launcher, const char* path);
+void lu_launcher_set_wallpaper(lu_launcher_t* launcher, const void* src);
 
 static void launcher_event_cb(lu_launcher_t* launcher, lu_launcher_event_t event)
 {
@@ -352,10 +352,7 @@ void lu_launcher_delete(lu_launcher_t** launcher)
     *launcher = NULL;
 }
 
-lv_obj_t* lu_launcher_get_app_contain(lu_launcher_t* launcher)
-{
-    return launcher->app_contain;
-}
+// c
 
 static void app_event_cb(lv_event_t* event)
 {
@@ -437,7 +434,8 @@ lu_app_t* lu_launcher_add_app(lu_launcher_t* launcher, const lu_app_info_t* app_
         }
         if(app_info->app_icon)
         {
-            lv_obj_t * label = lu_widget_txt_init(app->app_item,lu_font_get(lu_disp_get_dpi(launcher->lu_disp),LU_FONT_SIZE_HUGE,1));
+            // lv_obj_t * label = lu_widget_txt_init(app->app_item,lu_font_get(lu_disp_get_dpi(launcher->lu_disp),LU_FONT_SIZE_HUGE,1));
+            lv_obj_t * label = lu_widget_txt_init(app->app_item,lu_font_get_auto(launcher->lu_disp,LU_FONT_AUTO_SIZE_BIG));
             if(!label)
             {
                 lu_theme_remove_obj(launcher->lu_theme, app->app_item);
@@ -453,7 +451,8 @@ lu_app_t* lu_launcher_add_app(lu_launcher_t* launcher, const lu_app_info_t* app_
         {
             if(app_info->app_size != LU_APP_SIZE_SMALL)
             {
-                lv_obj_t* label = lu_widget_txt_init(app->app_item,lu_font_get(lu_disp_get_dpi(launcher->lu_disp),LU_FONT_SIZE_NORMAL,1));
+                // lv_obj_t* label = lu_widget_txt_init(app->app_item,lu_font_get(lu_disp_get_dpi(launcher->lu_disp),LU_FONT_SIZE_NORMAL,1));
+                lv_obj_t* label = lu_widget_txt_init(app->app_item,lu_font_get_auto(launcher->lu_disp,LU_FONT_AUTO_SIZE_MEDIUM));
                 if(!label)
                 {
                     lu_theme_remove_obj(launcher->lu_theme, app->app_item);
@@ -641,12 +640,12 @@ int32_t lu_launcher_get_active_app_num(lu_launcher_t* launcher)
     return launcher->active_app_num;
 }
 
-void lu_launcher_set_wallpaper(lu_launcher_t* launcher, const char* path)
+void lu_launcher_set_wallpaper(lu_launcher_t* launcher, const void* src)
 {
-    if(!launcher||!path)
+    if(!launcher||!src)
     {
         return;
     }
-    lv_image_set_src(launcher->bg, path);
+    lv_image_set_src(launcher->bg, src);
     // lu_widget_image_set_src(launcher->bg, path);
 }

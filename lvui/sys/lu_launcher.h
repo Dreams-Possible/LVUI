@@ -52,7 +52,7 @@ typedef struct lu_launcher_info_t
 
 lu_launcher_t* lu_launcher_create(const lu_launcher_info_t* launcher_info);
 void lu_launcher_delete(lu_launcher_t** home);
-lv_obj_t* lu_launcher_get_app_contain(lu_launcher_t* home);
+// lv_obj_t* lu_launcher_get_app_contain(lu_launcher_t* home);
 lu_app_t* lu_launcher_add_app(lu_launcher_t* home, const lu_app_info_t* app_info);
 void lu_launcher_remove_app(lu_launcher_t* home, lu_app_t** app);
 void lu_launcher_set_app_cb(lu_app_t* app, lu_app_cb_t cb);
@@ -63,6 +63,6 @@ void lu_launcher_close_all(lu_launcher_t* launcher);
 void lu_launcher_set_cb(lu_launcher_t* launcher, lu_launcher_event_t event, lu_launcher_double_click_cb_t cb, void* user_data);
 void* lu_launcher_get_user_data(lu_launcher_t* launcher, lu_launcher_event_t event);
 int32_t lu_launcher_get_active_app_num(lu_launcher_t* launcher);
-void lu_launcher_set_wallpaper(lu_launcher_t* launcher, const char* path);
+void lu_launcher_set_wallpaper(lu_launcher_t* launcher, const void* src);
 
 #endif

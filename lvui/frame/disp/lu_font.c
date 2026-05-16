@@ -1,7 +1,6 @@
 #include "lvui/plat/lu_type.h"
 #include "lvui/plat/lu_lvgl.h"
 #include "lvui/misc/lu_log.h"
-#include "lu_disp.h"
 #include "lu_font.h"
 
 //字体大小映射表
@@ -81,6 +80,8 @@ static const lv_font_t* const font_map[LU_FONT_SIZE_COUNT]=
 };
 
 const lv_font_t*lu_font_get(float dpi, lu_font_size_t size_type, float scale);
+//获取自适应字体大小
+const lv_font_t*lu_font_get_auto(lu_disp_t* disp, lu_font_auto_size_t size_type);
 
 const lv_font_t*lu_font_get(float dpi, lu_font_size_t size_type, float scale)
 {
@@ -128,4 +129,43 @@ const lv_font_t*lu_font_get(float dpi, lu_font_size_t size_type, float scale)
         size=LU_FONT_SIZE_MAX;
     }
     return font_map[size];
+}
+
+//获取自适应字体大小
+const lv_font_t*lu_font_get_auto(lu_disp_t* disp, lu_font_auto_size_t size_type)
+{
+    uint32_t size=lv_obj_get_width(disp->contain)*lv_obj_get_height(disp->contain);
+    if(size>320*240)
+    {
+        switch (size_type)
+        {
+            case LU_FONT_AUTO_SIZE_SMALL:
+                return lu_font_get(disp->dpi,LU_FONT_SIZE_NORMAL,disp->scale);
+            case LU_FONT_AUTO_SIZE_MEDIUM:
+                return lu_font_get(disp->dpi,LU_FONT_SIZE_MEDIUM,disp->scale);
+            case LU_FONT_AUTO_SIZE_BIG:
+                return lu_font_get(disp->dpi,LU_FONT_SIZE_HUGE,disp->scale);
+            case LU_FONT_AUTO_SIZE_LARGE:
+                return lu_font_get(disp->dpi,LU_FONT_SIZE_MAX,disp->scale);
+            // case LU_FONT_AUTO_SIZE_MAX:
+            //     return lu_font_get(disp->dpi,LU_FONT_SIZE_MAX,disp->scale);
+            default:
+                return LV_FONT_DEFAULT;
+        }
+    }else
+    {
+        switch (size_type)
+        {
+            case LU_FONT_AUTO_SIZE_SMALL:
+                return lu_font_get(disp->dpi,LU_FONT_SIZE_NORMAL-1,disp->scale);
+            case LU_FONT_AUTO_SIZE_MEDIUM:
+                return lu_font_get(disp->dpi,LU_FONT_SIZE_MEDIUM-2,disp->scale);
+            case LU_FONT_AUTO_SIZE_BIG:
+                return lu_font_get(disp->dpi,LU_FONT_SIZE_HUGE-2,disp->scale);
+            case LU_FONT_AUTO_SIZE_LARGE:
+                return lu_font_get(disp->dpi,LU_FONT_SIZE_MAX-1,disp->scale);
+            default:
+                return LV_FONT_DEFAULT;
+        }
+    }
 }

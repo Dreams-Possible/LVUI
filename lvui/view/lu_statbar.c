@@ -38,7 +38,7 @@ typedef struct lu_statbar_t
     bool if_exit;
 }lu_statbar_t;
 
-// int32_t lu_statbar_get_height(lu_statbar_t* statbar);
+int32_t lu_statbar_get_height(lu_statbar_t* statbar);
 lu_statbar_t* lu_statbar_create(lu_disp_t* lu_disp, lu_theme_t* lu_theme, lu_touch_t* lu_touch, lv_obj_t* parent);
 void lu_statbar_delete(lu_statbar_t** statbar);
 // void lu_statbar_set_time(lu_statbar_t* statbar, const char* hour, const char* minute, const char* second);
@@ -46,14 +46,14 @@ lv_obj_t* lu_statbar_add_icon(lu_statbar_t* statbar, lu_statbar_info_t* info);
 void lu_statbar_remove_icon(lu_statbar_t* statbar, lu_statbar_info_t* info);
 // lv_obj_t* lu_statbar_get_contain(lu_statbar_t* statbar);
 
-// int32_t lu_statbar_get_height(lu_statbar_t* statbar)
-// {
-//     if(!statbar)
-//     {
-//         return 0;
-//     }
-//     return lu_disp_dp2px(lu_disp_get_dpi(statbar->lu_disp), 30);
-// }
+int32_t lu_statbar_get_height(lu_statbar_t* statbar)
+{
+    if(!statbar)
+    {
+        return 0;
+    }
+    return lv_obj_get_height(statbar->contain);
+}
 
 lu_statbar_t* lu_statbar_create(lu_disp_t* lu_disp, lu_theme_t* lu_theme, lu_touch_t* lu_touch, lv_obj_t* parent)
 {
@@ -220,7 +220,8 @@ lv_obj_t* lu_statbar_add_icon(lu_statbar_t* statbar, lu_statbar_info_t* info)
     {
         case LU_STATBAR_TYPE_LEFT:
         {
-            lv_obj_t* obj = lu_widget_txt_init(statbar->icon_contain_left, lu_font_get(lu_disp_get_dpi(statbar->lu_disp), LU_FONT_SIZE_NORMAL, 1));
+            // lv_obj_t* obj = lu_widget_txt_init(statbar->icon_contain_left, lu_font_get(lu_disp_get_dpi(statbar->lu_disp), LU_FONT_SIZE_NORMAL, 1));
+            lv_obj_t* obj = lu_widget_txt_init(statbar->icon_contain_left, lu_font_get_auto(statbar->lu_disp,LU_FONT_AUTO_SIZE_MEDIUM));
             if(!obj)
             {
                 return NULL;
@@ -232,7 +233,8 @@ lv_obj_t* lu_statbar_add_icon(lu_statbar_t* statbar, lu_statbar_info_t* info)
         break;
         case LU_STATBAR_TYPE_RIGHT:
         {
-            lv_obj_t* obj = lu_widget_txt_init(statbar->icon_contain_right, lu_font_get(lu_disp_get_dpi(statbar->lu_disp), LU_FONT_SIZE_NORMAL, 1));
+            // lv_obj_t* obj = lu_widget_txt_init(statbar->icon_contain_right, lu_font_get(lu_disp_get_dpi(statbar->lu_disp), LU_FONT_SIZE_NORMAL, 1));
+            lv_obj_t* obj = lu_widget_txt_init(statbar->icon_contain_right, lu_font_get_auto(statbar->lu_disp,LU_FONT_AUTO_SIZE_MEDIUM));
             if(!obj)
             {
                 return NULL;

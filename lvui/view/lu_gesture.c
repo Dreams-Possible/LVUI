@@ -158,7 +158,12 @@ lu_gesture_t* lu_gesture_create(lu_disp_t* lu_disp, lu_theme_t* lu_theme, lu_tou
             // lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
             lv_obj_set_align(obj, LV_ALIGN_BOTTOM_MID);
             // lv_obj_remove_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
-            lu_theme_add_obj(gesture->lu_theme, obj, LU_THEME_TYPE_MODE);
+            lu_theme_info_t theme_info =
+            {
+                .self_type = LU_THEME_TYPE_MODE,
+                .flag = LU_THEME_FLAG_SELF,
+            };
+            lu_theme_add_obj(gesture->lu_theme, obj, &theme_info);
         }
         {
             lv_obj_t* obj = lu_widget_obj_init(gesture->contain);

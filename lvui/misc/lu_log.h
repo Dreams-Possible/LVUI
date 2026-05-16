@@ -3,9 +3,12 @@
 
 #include "lvui/plat/lu_type.h"
 #include "lvui/plat/lu_lvgl.h"
+#include "lvui/lvui_conf.h"
 
-void lu_log(char* fmt, ...);
+// void lu_log(char* fmt, ...);
 
+#if LU_LOG_LVGL
 #define LU_LOG LV_LOG_USER
+#endif
 
 #endif

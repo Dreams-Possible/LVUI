@@ -42,6 +42,8 @@ lu_ctrcent_t* lu_sysui_get_ctrcent(lu_sysui_t* sysui);
 lu_launcher_t* lu_sysui_get_launcher(lu_sysui_t* sysui);
 void lu_sysui_add_stat(lu_sysui_t* sysui, const char* icon, lu_sysui_stat_type_t stat_type);
 void lu_sysui_set_time(lu_sysui_t* sysui, uint64_t time);
-
+void lu_sysui_set_timezone(lu_sysui_t* sysui, int8_t timezone);
+int8_t lu_sysui_get_timezone(lu_sysui_t* sysui);
+int32_t lu_sysui_get_statbar_height(lu_sysui_t* sysui);
 
 #endif

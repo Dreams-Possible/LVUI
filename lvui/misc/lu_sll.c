@@ -60,18 +60,16 @@ void lu_sll_delete(lu_sll_t* *sll)
         return;
     }
     lu_sll_node_t* cur_node=(*sll)->meta;
-    while(cur_node->next)
+    while(cur_node)
     {
-        lu_sll_node_t* next_node=cur_node->next->next;
-        lu_sll_node_t* tg_node=next_node->next;
-        if(tg_node->data)
+        lu_sll_node_t* next_node=cur_node->next;
+        if(cur_node->data)
         {
-            lu_free((void*)tg_node->data);
+            lu_free((void*)cur_node->data);
         }
-        lu_free(tg_node);
+        lu_free(cur_node);
         cur_node=next_node;
     }
-    lu_free((*sll)->meta);
     lu_free(*sll);
     *sll=NULL;
 }

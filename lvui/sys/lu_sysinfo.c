@@ -57,12 +57,14 @@ typedef struct sys_data_t
     char hour[8];
     char minute[8];
     char second[8];
+    char timezone[8];
 } sys_data_t;
 
 typedef struct lu_sysinfo_t
 {
     sys_time_t time;
     sys_data_t data;
+    int8_t timezone;
 } lu_sysinfo_t;
 
 lu_sysinfo_t* lu_sysinfo_create();
@@ -87,6 +89,9 @@ void lu_sysinfo_set_second(lu_sysinfo_t* sys, uint8_t second);
 void lu_sysinfo_get_second(lu_sysinfo_t* sys, uint8_t* second);
 char* lu_sysinfo_get_second_str(lu_sysinfo_t* sys);
 void lu_sysinfo_set_time(lu_sysinfo_t* sys, uint64_t time);
+void lu_sysinfo_set_timezone(lu_sysinfo_t* sys, int8_t timezone);
+int8_t lu_sysinfo_get_timezone(lu_sysinfo_t* sys);
+const char* lu_sysinfo_get_timezone_str(lu_sysinfo_t* sys);
 
 lu_sysinfo_t* lu_sysinfo_create()
 {
@@ -211,7 +216,7 @@ void lu_sysinfo_set_hour(lu_sysinfo_t* sys, uint8_t hour)
     }
     sys->time.hour = hour;
     memset(sys->data.hour, 0, sizeof(sys->data.hour));
-    snprintf(sys->data.hour, sizeof(sys->data.hour), "%.2d", sys->time.hour);
+    snprintf(sys->data.hour, sizeof(sys->data.hour), "%d", sys->time.hour);
 }
 
 void lu_sysinfo_get_hour(lu_sysinfo_t* sys, uint8_t* hour)
@@ -240,7 +245,7 @@ void lu_sysinfo_set_minute(lu_sysinfo_t* sys, uint8_t minute)
     }
     sys->time.minute = minute;
     memset(sys->data.minute, 0, sizeof(sys->data.minute));
-    snprintf(sys->data.minute, sizeof(sys->data.minute), "%.2d", sys->time.minute);
+    snprintf(sys->data.minute, sizeof(sys->data.minute), "%d", sys->time.minute);
 }
 
 void lu_sysinfo_get_minute(lu_sysinfo_t* sys, uint8_t* minute)
@@ -269,7 +274,7 @@ void lu_sysinfo_set_second(lu_sysinfo_t* sys, uint8_t second)
     }
     sys->time.second = second;
     memset(sys->data.second, 0, sizeof(sys->data.second));
-    snprintf(sys->data.second, sizeof(sys->data.second), "%.2d", sys->time.second);
+    snprintf(sys->data.second, sizeof(sys->data.second), "%d", sys->time.second);
 }
 
 void lu_sysinfo_get_second(lu_sysinfo_t* sys, uint8_t* second)
@@ -290,6 +295,42 @@ char* lu_sysinfo_get_second_str(lu_sysinfo_t* sys)
     return sys->data.second;
 }
 
+void lu_sysinfo_set_timezone(lu_sysinfo_t* sys, int8_t timezone)
+{
+    if(!sys)
+    {
+        return;
+    }
+    sys->timezone = timezone;
+    memset(sys->data.timezone, 0, sizeof(sys->data.timezone));
+    if(timezone >= 0)
+    {
+        snprintf(sys->data.timezone, sizeof(sys->data.timezone), "+%d", timezone);
+    }
+    else
+    {
+        snprintf(sys->data.timezone, sizeof(sys->data.timezone), "%d", timezone);
+    }
+}
+
+int8_t lu_sysinfo_get_timezone(lu_sysinfo_t* sys)
+{
+    if(!sys)
+    {
+        return 0;
+    }
+    return sys->timezone;
+}
+
+const char* lu_sysinfo_get_timezone_str(lu_sysinfo_t* sys)
+{
+    if(!sys)
+    {
+        return NULL;
+    }
+    return sys->data.timezone;
+}
+
 void lu_sysinfo_set_time(lu_sysinfo_t* sys, uint64_t time)
 {
     if(!sys)
@@ -305,7 +346,7 @@ void lu_sysinfo_set_time(lu_sysinfo_t* sys, uint64_t time)
     lu_sysinfo_set_year(sys, tinfo->tm_year + 1900);
     lu_sysinfo_set_month(sys, tinfo->tm_mon + 1);
     lu_sysinfo_set_day(sys, tinfo->tm_mday);
-    lu_sysinfo_set_hour(sys, tinfo->tm_hour+8);
+    lu_sysinfo_set_hour(sys, (tinfo->tm_hour + sys->timezone + 24) % 24);
     lu_sysinfo_set_minute(sys, tinfo->tm_min);
     lu_sysinfo_set_second(sys, tinfo->tm_sec);
 }

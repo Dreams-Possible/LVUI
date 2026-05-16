@@ -46,6 +46,7 @@ typedef struct lu_locker_t
     lu_anim_t* info_mask_anim;
     lv_timer_t* timer;
     bool if_exit;
+    bool pre_exit;
 
     bool is_pressed;
 
@@ -69,7 +70,7 @@ lv_obj_t* lu_locker_add_info_txt(lu_locker_t* locker,lu_locker_info_txt_t* info)
 void lu_locker_remove_info_txt(lu_locker_t* locker, lu_locker_info_txt_t* info);
 lv_obj_t* lu_locker_add_info_icon(lu_locker_t* locker, lu_locker_info_icon_t* info);
 void lu_locker_remove_info_icon(lu_locker_t* locker, lu_locker_info_icon_t* info);
-void lu_locker_set_wallpaper(lu_locker_t* locker, const char* path);
+void lu_locker_set_wallpaper(lu_locker_t* locker, const void* src);
 
 static void locker_event_cb(lu_locker_t* locker, lu_locker_event_t event)
 {
@@ -93,8 +94,9 @@ static void locker_mask_event_cb(lv_event_t *event)
             locker->is_pressed = false;
             if(lu_touch_get_moved_y(locker->lu_touch)<-lu_disp_get_ver(locker->lu_disp)*0.4)
             {
+                // lu_anim_set_value(locker->info_mask_anim, -lu_disp_get_ver(locker->lu_disp)*0.4);
                 lu_locker_exit(locker);
-            }else
+            }
             if(lu_touch_get_double_click(locker->lu_touch))
             {
                 locker_event_cb(locker, LU_LOCKER_EVENT_DOUBLE_CLICK);
@@ -108,7 +110,7 @@ static void locker_mask_event_cb(lv_event_t *event)
 static void locker_timer_cb(lv_timer_t* timer)
 {
     lu_locker_t* locker = (lu_locker_t*)lv_timer_get_user_data(timer);
-    if(locker->if_exit)
+    if(locker->if_exit||locker->pre_exit)
     {
         return;
     }
@@ -121,7 +123,7 @@ static void locker_timer_cb(lv_timer_t* timer)
         lu_anim_set_value(locker->info_mask_anim, lu_touch_get_moved_y(locker->lu_touch));
     }else
     {
-        lu_anim_set_value(locker->info_mask_anim, lu_touch_get_moved_y(locker->lu_touch));
+        lu_anim_set_value(locker->info_mask_anim, 0);
     }
 }
 
@@ -427,6 +429,7 @@ void lu_locker_enter(lu_locker_t* locker)
     {
         return;
     }
+    locker->pre_exit = false;
     locker->if_exit = false;
     lv_obj_remove_flag(locker->contain, LV_OBJ_FLAG_HIDDEN);
     lu_anim_set_value(locker->info_mask_anim, 0);
@@ -461,6 +464,7 @@ void lu_locker_exit(lu_locker_t* locker)
     {
         return;
     }
+    locker->pre_exit = true;
     // lu_anim_set_value(locker->info_mask_anim, -lu_disp_get_ver(locker->lu_disp));
     lu_anim_set_value(locker->info_mask_anim, -lu_disp_get_ver(locker->lu_disp));
     lv_anim_t anim;
@@ -562,7 +566,8 @@ lv_obj_t* lu_locker_add_info_icon(lu_locker_t* locker, lu_locker_info_icon_t* in
     {
         case LU_LOCKER_ICON_TYPE_LEFT:
         {
-            lv_obj_t* obj = lu_widget_txt_init(locker->info_icon_left, lu_font_get(lu_disp_get_dpi(locker->lu_disp), LU_FONT_SIZE_NORMAL, 1));
+            // lv_obj_t* obj = lu_widget_txt_init(locker->info_icon_left, lu_font_get(lu_disp_get_dpi(locker->lu_disp), LU_FONT_SIZE_NORMAL, 1));
+            lv_obj_t* obj = lu_widget_txt_init(locker->info_icon_left, lu_font_get_auto(locker->lu_disp,LU_FONT_AUTO_SIZE_MEDIUM));
             if(!obj)
             {
                 return NULL;
@@ -574,7 +579,8 @@ lv_obj_t* lu_locker_add_info_icon(lu_locker_t* locker, lu_locker_info_icon_t* in
         break;
         case LU_LOCKER_ICON_TYPE_RIGHT:
         {
-            lv_obj_t* obj = lu_widget_txt_init(locker->info_icon_right, lu_font_get(lu_disp_get_dpi(locker->lu_disp), LU_FONT_SIZE_NORMAL, 1));
+            // lv_obj_t* obj = lu_widget_txt_init(locker->info_icon_right, lu_font_get(lu_disp_get_dpi(locker->lu_disp), LU_FONT_SIZE_NORMAL, 1));
+            lv_obj_t* obj = lu_widget_txt_init(locker->info_icon_right, lu_font_get_auto(locker->lu_disp,LU_FONT_AUTO_SIZE_MEDIUM));
             if(!obj)
             {
                 return NULL;
@@ -633,12 +639,12 @@ void lu_locker_remove_icon(lu_locker_t* locker, lu_locker_info_icon_t* info)
     }
 }
 
-void lu_locker_set_wallpaper(lu_locker_t* locker, const char* path)
+void lu_locker_set_wallpaper(lu_locker_t* locker, const void* src)
 {
-    if(!locker||!path)
+    if(!locker||!src)
     {
         return;
     }
-    lv_image_set_src(locker->bg, path);
+    lv_image_set_src(locker->bg, src);
     // lu_widget_image_set_src(locker->bg, path);
 }

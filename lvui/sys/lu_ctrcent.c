@@ -664,7 +664,8 @@ lu_ctrbtn_t* lu_ctrcent_add_ctrbtn(lu_ctrcent_t* ctrcent, const lu_ctrbtn_info_t
             {
                 if(ctrbtn_info->ctrbtn_icon)
                 {
-                    lv_obj_t * label = lu_widget_txt_init(obj,lu_font_get(lu_disp_get_dpi(ctrcent->lu_disp),LU_FONT_SIZE_HUGE,1));
+                    // lv_obj_t * label = lu_widget_txt_init(obj,lu_font_get(lu_disp_get_dpi(ctrcent->lu_disp),LU_FONT_SIZE_HUGE,1));
+                    lv_obj_t * label = lu_widget_txt_init(obj,lu_font_get_auto(ctrcent->lu_disp,LU_FONT_AUTO_SIZE_BIG));
                     if(!label)
                     {
                         lu_theme_remove_obj(ctrcent->lu_theme, ctrbtn->ctrbtn_item);
@@ -682,7 +683,8 @@ lu_ctrbtn_t* lu_ctrcent_add_ctrbtn(lu_ctrcent_t* ctrcent, const lu_ctrbtn_info_t
                 {
                     if(ctrbtn_info->ctrbtn_size != LU_CTRBTN_SIZE_SMALL)
                     {
-                        lv_obj_t* label = lu_widget_txt_init(obj,lu_font_get(lu_disp_get_dpi(ctrcent->lu_disp),LU_FONT_SIZE_NORMAL,1));
+                        // lv_obj_t* label = lu_widget_txt_init(obj,lu_font_get(lu_disp_get_dpi(ctrcent->lu_disp),LU_FONT_SIZE_NORMAL,1));
+                        lv_obj_t* label = lu_widget_txt_init(obj,lu_font_get_auto(ctrcent->lu_disp,LU_FONT_AUTO_SIZE_MEDIUM));
                         if(!label)
                         {
                             lu_theme_remove_obj(ctrcent->lu_theme, ctrbtn->ctrbtn_item);

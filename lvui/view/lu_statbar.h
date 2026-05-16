@@ -19,7 +19,7 @@ typedef struct lu_statbar_info_t
 }lu_statbar_info_t;
 typedef struct lu_statbar_t lu_statbar_t;
 
-// int32_t lu_statbar_get_height(lu_statbar_t* statbar);
+int32_t lu_statbar_get_height(lu_statbar_t* statbar);
 lu_statbar_t* lu_statbar_create(lu_disp_t* lu_disp, lu_theme_t* lu_theme, lu_touch_t* lu_touch, lv_obj_t* parent);
 void lu_statbar_delete(lu_statbar_t** statbar);
 // void lu_statbar_set_time(lu_statbar_t* statbar, const char* hour, const char* minute, const char* second);

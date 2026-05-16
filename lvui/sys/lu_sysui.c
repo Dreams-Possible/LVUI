@@ -63,6 +63,9 @@ lu_ctrcent_t* lu_sysui_get_ctrcent(lu_sysui_t* sysui);
 lu_launcher_t* lu_sysui_get_launcher(lu_sysui_t* sysui);
 void lu_sysui_add_stat(lu_sysui_t* sysui, const char* icon, lu_sysui_stat_type_t stat_type);
 void lu_sysui_set_time(lu_sysui_t* sysui, uint64_t time);
+void lu_sysui_set_timezone(lu_sysui_t* sysui, int8_t timezone);
+int8_t lu_sysui_get_timezone(lu_sysui_t* sysui);
+int32_t lu_sysui_get_statbar_height(lu_sysui_t* sysui);
 
 static void launcher_cb(lu_launcher_t* launcher)
 {
@@ -85,7 +88,8 @@ static bool sys_ui_init(lu_sysui_t* sysui)
 {
     lu_locker_info_txt_t info = {0};
     info.txt = "TIME",
-    info.font = lu_font_get(sysui->lu_disp->dpi, LU_FONT_SIZE_MAX, 1.0);
+    // info.font = lu_font_get(sysui->lu_disp->dpi, LU_FONT_SIZE_MAX, 1.0);
+    info.font = lu_font_get_auto(sysui->lu_disp,LU_FONT_AUTO_SIZE_LARGE);
     sysui->locker_time = lu_locker_add_info_txt(sysui->locker, &info);
     if(!sysui->locker_time)
     {
@@ -93,7 +97,8 @@ static bool sys_ui_init(lu_sysui_t* sysui)
         return false;
     }
     info.txt = "DATE",
-    info.font = lu_font_get(sysui->lu_disp->dpi, LU_FONT_SIZE_HUGE, 1.0);
+    // info.font = lu_font_get(sysui->lu_disp->dpi, LU_FONT_SIZE_HUGE, 1.0);
+    info.font = lu_font_get_auto(sysui->lu_disp,LU_FONT_AUTO_SIZE_BIG);
     sysui->locker_date = lu_locker_add_info_txt(sysui->locker, &info);
     if(!sysui->locker_date)
     {
@@ -377,4 +382,31 @@ void lu_sysui_set_time(lu_sysui_t* sysui, uint64_t time)
     // lu_statbar_set_time(lu_ctrbar_get_statbar(sysui->ctrbar), lu_sysinfo_get_hour_str(sysui->sysinfo), lu_sysinfo_get_minute_str(sysui->sysinfo), "");
     // lu_locker_set_time(sysui->locker, lu_sysinfo_get_hour_str(sysui->sysinfo), lu_sysinfo_get_minute_str(sysui->sysinfo), lu_sysinfo_get_second_str(sysui->sysinfo));
     // lu_locker_set_time(sysui->locker, lu_sysinfo_get_hour_str(sysui->sysinfo), lu_sysinfo_get_minute_str(sysui->sysinfo), "");
+}
+
+void lu_sysui_set_timezone(lu_sysui_t* sysui, int8_t timezone)
+{
+    if(!sysui)
+    {
+        return;
+    }
+    lu_sysinfo_set_timezone(sysui->sysinfo, timezone);
+}
+
+int8_t lu_sysui_get_timezone(lu_sysui_t* sysui)
+{
+    if(!sysui)
+    {
+        return 0;
+    }
+    return lu_sysinfo_get_timezone(sysui->sysinfo);
+}
+
+int32_t lu_sysui_get_statbar_height(lu_sysui_t* sysui)
+{
+    if(!sysui)
+    {
+        return 0;
+    }
+    return lu_statbar_get_height(lu_ctrbar_get_statbar(sysui->ctrbar));
 }
